@@ -6,14 +6,14 @@
 /*   By: aparedes <aparedes@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:53:21 by aparedes          #+#    #+#             */
-/*   Updated: 2022/06/28 10:35:19 by aparedes         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:19:33 by aparedes         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# include <mlx.h>
+# include "../mlx/mlx.h"
 # include <stdlib.h>
 # include <fcntl.h>
 # include <unistd.h>

@@ -6,44 +6,48 @@
 #    By: aparedes <aparedes@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/20 17:53:26 by aparedes          #+#    #+#              #
-#    Updated: 2022/06/20 17:53:36 by aparedes         ###   ########.fr        #
+#    Updated: 2022/07/04 12:48:58 by aparedes         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	so_long
 
-NAMEBONUS	=	so_long_bonus
-
-MLX			=	mlxLIB.a
-
-SRCS			=	so_long.c	\
-					display/*	\
-					parsing/*	\
-					GNL/*		\
-					utils/*
-
-CC			=	clang
+CC			=	cc
 
 CFLAGS		=	-Wall -Wextra -Werror
 
-$(NAME):
-			@echo "\033[33m[Compilation of so_long...]"
-			@ $(MAKE) -C mlx all >/dev/null 2>&1
-			@ cp ./mlx/$(MLX) .
-			@$(CC) $(CFLAGS) -g3 -Ofast -o $(NAME) -Imlx $(SRCS) -g -fsanitize=address -Lmlx -lmlx -lm -framework OpenGL -framework AppKit
-			@echo "\033[32m[ ./so_long charged ]"
+SRCS			=	so_long.c				\
+					display/display.c		\
+					display/draw.c			\
+					display/keyboard.c		\
+					display/moveplayer.c	\
+					display/printtexture.c	\
+					parsing/checkmap.c		\
+					parsing/extras.c		\
+					parsing/parsing.c		\
+					parsing/stockmap.c		\
+					GNL/get_next_line.c		\
+					utils/freeandexit.c		\
+					utils/utils.c			\
+
+OBJ		=	$(SRCS:.c=.o)
 
 all:		$(NAME)
 
+$(NAME):	$(OBJ)
+	$(MAKE) -C ./mlx/
+	$(CC) -o $@ -Imlx $^ -g -fsanitize=address -Lmlx -lmlx -lm -framework OpenGL -framework AppKit
+
+%.o:%.c
+			$(CC) $(CFLAGS) -c $< -o $@
+	
 clean:
-			@ echo "\033[31m[Removing ...]"
-			@ $(MAKE) -C mlx clean
+			@$(MAKE) -C ./mlx clean
 
 fclean:		clean
-			@ rm $(MLX)
-			@ rm so_long >/dev/null 2>&1
+			rm -f $(NAME)
+			rm $(OBJ)
 
 re:			fclean all
 
-.PHONY:		$(NAME) all bonus test clean fclean re
-
+.PHONY:		all test clean fclean re
